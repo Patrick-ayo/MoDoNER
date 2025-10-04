@@ -1,0 +1,17 @@
+Component,Primary Function,Technical Implementation,Key Benefits
+Document Ingestion Engine,Accept PDF/Text documents from multiple sources,"File upload APIs, format validation, metadata extraction",Streamlined document submission and tracking
+Optical Character Recognition (OCR),Extract text from scanned documents and images,Tesseract/AWS Textract integration with image preprocessing,Digitization of legacy paper-based documents
+Natural Language Processing Pipeline,Process and analyze textual content using NLP,"BERT/RoBERTa models, entity recognition, sentiment analysis",Intelligent content understanding and analysis
+Document Classification Module,Categorize DPRs by project type and sector,Multi-class classification using trained ML models,Automated categorization reducing manual effort
+Completeness Assessment Engine,Evaluate document sections for completeness,Rule-based and ML-based section detection algorithms,Consistent evaluation standards across all DPRs
+Compliance Checking System,Check adherence to MDoNER guidelines,"Template matching, regulatory requirement validation",Standardized compliance verification process
+Risk Prediction Models,Predict project risks and potential issues,Ensemble models combining historical data and project features,Early identification of potential project issues
+Quality Scoring Framework,Generate standardized quality scores,Weighted scoring algorithms across multiple criteria,Objective and consistent quality assessment
+Gap Analysis Engine,Identify missing information and inconsistencies,Comparative analysis against standard DPR templates,Systematic identification of improvement areas
+Multilingual Processing,"Support Assamese, Hindi, and English languages",Multi-language tokenizers and translation capabilities,Inclusive processing for regional stakeholders
+Offline Processing Capability,Function without internet connectivity,"Local model deployment, edge computing infrastructure",Reliable operation in remote areas
+Dashboard & Visualization,Provide interactive dashboards for officials,React/Angular frontend with data visualization libraries,Real-time insights and decision support
+Automated Reporting,Generate automated evaluation reports,Automated PDF/Excel report generation pipelines,Consistent and comprehensive documentation
+Integration APIs,Connect with existing MDoNER systems,"REST APIs, database connectors, webhook integration",Seamless workflow integration
+Human Review Interface,Enable manual review and validation,Workflow management system with approval chains,Quality assurance and expert validation
+Security & Access Control,Ensure data security and role-based access,"OAuth 2.0, role-based permissions, audit logging",Data protection and governance compliance
