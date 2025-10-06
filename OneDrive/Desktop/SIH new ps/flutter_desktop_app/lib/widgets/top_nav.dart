@@ -3,17 +3,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../theme.dart';
 
 class TopNav extends StatelessWidget implements PreferredSizeWidget {
-  final bool isDark;
-  final ValueChanged<bool> onThemeChanged;
-
-  const TopNav({super.key, required this.isDark, required this.onThemeChanged});
+  const TopNav({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(80);
 
   @override
   Widget build(BuildContext context) {
-    final bg = isDark ? Colors.grey[900] : AppTheme.accentCyan;
+    final bg = AppTheme.accentCyan;
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: bg,
@@ -49,10 +46,8 @@ class TopNav extends StatelessWidget implements PreferredSizeWidget {
             ],
           ),
           const Spacer(),
-          Row(children: [
-            const Icon(Icons.brightness_2),
-            Switch(value: isDark, onChanged: onThemeChanged),
-          ])
+          // Intentionally no interactive theme control here — theme is controlled from the AppBar toggle
+          const Icon(Icons.brightness_2),
         ],
       ),
     );
