@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'theme.dart';
 import 'provider/theme_provider.dart';
+import 'provider/language_provider.dart';
 import 'widgets/theme_toggler.dart';
+import 'widgets/language_selector.dart';
 import 'screens/home_screen.dart';
 import 'screens/upload_screen.dart';
 import 'screens/assessment_screen.dart';
@@ -10,11 +12,15 @@ import 'screens/assessment_screen.dart';
 import 'screens/reports_screen.dart';
 import 'screens/admin_screen.dart';
 import 'widgets/svg_icon.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => LanguageProvider()),
+      ],
       child: const DPRAssessmentApp(),
     ),
   );
@@ -42,6 +48,22 @@ class _DPRAssessmentAppState extends State<DPRAssessmentApp> {
     AdminScreen(),
   ];
 
+  // Back button interceptor handler needs to be a stable reference so it can be removed later
+  bool _onBackPressed(bool stopDefaultButtonEvent, RouteInfo routeInfo) {
+    // If a nested Navigator can pop, handle and consume the event
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(_onBackPressed);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
@@ -55,8 +77,9 @@ class _DPRAssessmentAppState extends State<DPRAssessmentApp> {
             appBar: AppBar(
               title: const Text('DPR Assessment System'),
               actions: [
+                const LanguageSelector(),
                 Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
+                  padding: const EdgeInsets.only(right: 12.0),
                   child: ThemeToggler(
                     isDarkMode: themeProvider.isDarkMode,
                     onToggle: (isDark) => themeProvider.setTheme(isDark),
@@ -103,5 +126,11 @@ class _DPRAssessmentAppState extends State<DPRAssessmentApp> {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(_onBackPressed);
+    super.dispose();
   }
 }

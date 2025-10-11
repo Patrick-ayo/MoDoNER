@@ -14,10 +14,11 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Welcome to DPR Assessment System', style: Theme.of(context).textTheme.displayMedium),
-          const SizedBox(height: 8),
-          Text('Advanced AI-powered system for automated evaluation of DPRs.', style: Theme.of(context).textTheme.bodyMedium),
-          const SizedBox(height: 24),
+         Text('Welcome back,', style: Theme.of(context).textTheme.headlineLarge),
+          const SizedBox(height: 4),
+          Text('Here\'s your analysis dashboard', style: Theme.of(context).textTheme.bodyLarge),
+          const SizedBox(height: 20),
+          
           // Quick access cards (includes Analysis action)
           Row(
             children: [
@@ -25,7 +26,7 @@ class HomeScreen extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => AnalysisScreen())),
                   child: Card(
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
+                    color: Theme.of(context).colorScheme.primary.withAlpha((0.05 * 255).round()),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Row(
@@ -69,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                             onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => AnalysisScreen())),
                             child: Container(
                               margin: const EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Theme.of(context).colorScheme.primary.withOpacity(0.05)),
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Theme.of(context).colorScheme.primary.withAlpha((0.05 * 255).round())),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -86,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                             onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => AnalysisScreen())),
                             child: Container(
                               margin: const EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Theme.of(context).colorScheme.primary.withOpacity(0.05)),
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Theme.of(context).colorScheme.primary.withAlpha((0.05 * 255).round())),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

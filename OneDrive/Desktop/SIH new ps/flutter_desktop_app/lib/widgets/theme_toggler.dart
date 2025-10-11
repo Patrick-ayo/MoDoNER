@@ -127,8 +127,8 @@ class _ThemeTogglerState extends State<ThemeToggler>
               boxShadow: [
                 BoxShadow(
                   color: widget.isDarkMode
-                      ? Colors.black.withOpacity(0.3)
-                      : Colors.grey.withOpacity(0.2),
+                      ? Colors.black.withAlpha((0.3 * 255).round())
+                      : Colors.grey.withAlpha((0.2 * 255).round()),
                   offset: const Offset(0, 2),
                   blurRadius: 4,
                 ),
@@ -147,7 +147,7 @@ class _ThemeTogglerState extends State<ThemeToggler>
                         child: Icon(
                           Icons.star,
                           size: 3,
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withAlpha((0.8 * 255).round()),
                         ),
                       ),
                     );
@@ -165,7 +165,7 @@ class _ThemeTogglerState extends State<ThemeToggler>
                           width: 6,
                           height: 3,
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.white.withAlpha((0.8 * 255).round()),
                             borderRadius: BorderRadius.circular(2),
                           ),
                         ),
@@ -200,8 +200,8 @@ class _ThemeTogglerState extends State<ThemeToggler>
                         boxShadow: [
                           BoxShadow(
                             color: widget.isDarkMode
-                                ? Colors.yellow.withOpacity(0.4)
-                                : Colors.orange.withOpacity(0.3),
+                                ? Colors.yellow.withAlpha((0.4 * 255).round())
+                                : Colors.orange.withAlpha((0.3 * 255).round()),
                             offset: const Offset(0, 1),
                             blurRadius: 3,
                           ),

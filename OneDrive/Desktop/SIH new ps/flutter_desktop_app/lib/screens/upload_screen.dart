@@ -80,7 +80,7 @@ class _UploadScreenState extends State<UploadScreen> {
                   color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: [
-                    BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 6, offset: const Offset(0,2)),
+                    BoxShadow(color: Colors.black.withAlpha((0.04 * 255).round()), blurRadius: 6, offset: const Offset(0,2)),
                   ],
                 ),
                 child: _pickedFile == null
@@ -117,7 +117,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     .map((type) => ChoiceChip(
                       label: Text(type),
                       selected: _projectType==type,
-                      selectedColor: Theme.of(context).colorScheme.primary.withOpacity(0.12),
+                      selectedColor: Theme.of(context).colorScheme.primary.withAlpha((0.12 * 255).round()),
                       onSelected: (_) => setState(() => _projectType = type),
                     )).toList(),
                 ),
@@ -138,7 +138,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     .map((lang) => ChoiceChip(
                       label: Text(lang),
                       selected: _language==lang,
-                      selectedColor: Theme.of(context).colorScheme.primary.withOpacity(0.12),
+                      selectedColor: Theme.of(context).colorScheme.primary.withAlpha((0.12 * 255).round()),
                       onSelected: (_) => setState(() => _language = lang),
                     )).toList(),
                 ),
