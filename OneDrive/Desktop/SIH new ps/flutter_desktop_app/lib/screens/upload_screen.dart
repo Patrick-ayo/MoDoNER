@@ -62,7 +62,7 @@ class _UploadScreenState extends State<UploadScreen> {
                 ? Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.reports.svg, size: 40, color: Theme.of(context).textTheme.titleMedium?.color),
+Icon(Icons.report, size: 40, color: Theme.of(context).textTheme.titleMedium?.color),
                       SizedBox(height: 8),
                       Text('Tap to select DPR document', style: TextStyle(color: Theme.of(context).textTheme.titleMedium?.color)),
                     ],
