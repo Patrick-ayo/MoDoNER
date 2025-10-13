@@ -1,154 +1,124 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
+import '../widgets/action_button.dart';
+import '../widgets/evaluations_chart.dart';
+import '../widgets/flagged_issues_card.dart';
+import '../widgets/risk_predictions_card.dart';
+import '../widgets/stat_card.dart';
+import '../widgets/submission_list_item.dart';
 import '../widgets/svg_icon.dart';
 import 'analysis_screen.dart';
 import '../theme.dart';
 
-class HomeScreen extends StatelessWidget {
+enum HomeTab { analytics, flaggedIssues, riskPrediction }
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  HomeTab _selectedTab = HomeTab.analytics;
+
+  // State variable to track if the submissions list is expanded
+  bool _isSubmissionsExpanded = false;
+
+  // Mock data moved to be a class member with more items
+  final List<Map<String, dynamic>> _recentSubmissions = [
+    {'name': 'DPR Project #1 (Roads)', 'riskScore': 45},
+    {'name': 'DPR Project #2 (Healthcare)', 'riskScore': 65},
+    {'name': 'DPR Project #3 (Tourism)', 'riskScore': 85},
+    {'name': 'DPR Project #4 (Water Supply)', 'riskScore': 30},
+    {'name': 'DPR Project #5 (Education)', 'riskScore': 55},
+    {'name': 'DPR Project #6 (Power Grid)', 'riskScore': 78},
+    {'name': 'DPR Project #7 (Sanitation)', 'riskScore': 25},
+    {'name': 'DPR Project #8 (Housing)', 'riskScore': 60},
+  ];
+
+  final int _submissionLimit = 5;
+
+  @override
   Widget build(BuildContext context) {
-    // TODO: replace with real data
+    // Calculate how many items to show based on the expansion state
+    final int itemCountToShow = _isSubmissionsExpanded
+        ? _recentSubmissions.length
+        : min(_recentSubmissions.length, _submissionLimit);
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         Text('Welcome back,', style: Theme.of(context).textTheme.headlineLarge),
-          const SizedBox(height: 4),
-          Text('Here\'s your analysis dashboard', style: Theme.of(context).textTheme.bodyLarge),
-          const SizedBox(height: 20),
-          
-          // Quick access cards (includes Analysis action)
-          Row(
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => AnalysisScreen())),
-                  child: Card(
-                    color: Theme.of(context).colorScheme.primary.withAlpha((0.05 * 255).round()),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        children: [
-                          const SvgIcon('assets/icons/analysis.svg', size: 36),
-                          const SizedBox(width: 12),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Run Analysis', style: Theme.of(context).textTheme.titleLarge),
-                              const SizedBox(height: 4),
-                              Text('Open analysis tools and reports', style: Theme.of(context).textTheme.bodySmall),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          // Expanded Analysis preview (charts + POE list)
-          Text('Analysis Overview', style: Theme.of(context).textTheme.headlineLarge),
-          const SizedBox(height: 12),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Recent Analysis', style: Theme.of(context).textTheme.titleLarge),
-                  const SizedBox(height: 12),
-                  // Mock charts row
-                  SizedBox(
-                    height: 160,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => AnalysisScreen())),
-                            child: Container(
-                              margin: const EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Theme.of(context).colorScheme.primary.withAlpha((0.05 * 255).round())),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.show_chart, size: 36, color: AppTheme.accentCyan),
-                                  const SizedBox(height: 8),
-                                  Text('Accuracy Trend', style: Theme.of(context).textTheme.bodyLarge),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => AnalysisScreen())),
-                            child: Container(
-                              margin: const EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Theme.of(context).colorScheme.primary.withAlpha((0.05 * 255).round())),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.pie_chart, size: 36, color: Colors.green),
-                                  const SizedBox(height: 8),
-                                  Text('Category Distribution', style: Theme.of(context).textTheme.bodyLarge),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text('Points of Evaluation (POE)', style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  // POE list
-                  Column(
-                    children: List.generate(3, (i) => ListTile(
-                      leading: CircleAvatar(child: Text('${i+1}')),
-                      title: Text('POE ${i+1}: Completeness'),
-                      subtitle: Text('Score: ${[95,78,88][i]}%'),
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => AnalysisScreen())),
-                    )),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 24),
-          Text('Recent DPR Submissions', style: Theme.of(context).textTheme.headlineLarge),
-          const SizedBox(height: 12),
-          // Recent DPR Submissions - expandable box that will grow with content
-          Container(
-            width: double.infinity,
-            constraints: const BoxConstraints(minHeight: 120, maxHeight: 400),
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(8)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text('Recent DPR Submissions', style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: 3, // replace with dynamic count from DB
-                    itemBuilder: (_, i) => ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: AssetImage('assets/logo.png'),
-                        onBackgroundImageError: (_, __) {},
-                      ),
-                      title: Text('DPR Project #${i+1}'),
-                      subtitle: Text('State • Category • ₹100 Cr'),
-                      trailing: Icon(Icons.chevron_right),
-                    ),
-                  ),
-                )
+                Expanded(child: StatCard(value: '120', label: 'Total DPRs Submitted')),
+                const SizedBox(width: 12),
+                Expanded(child: StatCard(value: '95', label: 'Completed Evaluations')),
+                const SizedBox(width: 12),
+                Expanded(child: StatCard(value: '80%', label: 'Average Complete')),
+                const SizedBox(width: 12),
+                Expanded(child: StatCard(value: '10', label: 'Active Projects')),
               ],
             ),
           ),
+          const SizedBox(height: 24),
+          Row(
+            children: [
+              Expanded(child: ActionButton(text: 'Analytics', isPrimary: _selectedTab == HomeTab.analytics, onPressed: () => setState(() => _selectedTab = HomeTab.analytics))),
+              const SizedBox(width: 12),
+              Expanded(child: ActionButton(text: 'Flagged Issues', isPrimary: _selectedTab == HomeTab.flaggedIssues, onPressed: () => setState(() => _selectedTab = HomeTab.flaggedIssues))),
+              const SizedBox(width: 12),
+              Expanded(child: ActionButton(text: 'Risk Prediction', isPrimary: _selectedTab == HomeTab.riskPrediction, onPressed: () => setState(() => _selectedTab = HomeTab.riskPrediction))),
+            ],
+          ),
+          const SizedBox(height: 24),
+          if (_selectedTab == HomeTab.analytics)
+            const EvaluationsChart()
+          else if (_selectedTab == HomeTab.flaggedIssues)
+            const FlaggedIssuesCard()
+          else if (_selectedTab == HomeTab.riskPrediction)
+            const RiskPredictionsCard(),
+          const SizedBox(height: 24),
+
+          Text('Recent DPR Submissions', style: Theme.of(context).textTheme.headlineLarge),
+          const SizedBox(height: 12),
+          
+          ListView.builder(
+            itemCount: itemCountToShow, // Use the dynamically calculated item count
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final submission = _recentSubmissions[index];
+              return SubmissionListItem(
+                index: index,
+                name: submission['name'],
+                riskScore: submission['riskScore'],
+              );
+            },
+          ),
+          
+          // Conditionally show the "View More" / "View Less" button
+          if (_recentSubmissions.length > _submissionLimit)
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: TextButton.icon(
+                  icon: Icon(_isSubmissionsExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down),
+                  label: Text(_isSubmissionsExpanded ? 'View Less' : 'View More'),
+                  onPressed: () {
+                    setState(() {
+                      _isSubmissionsExpanded = !_isSubmissionsExpanded;
+                    });
+                  },
+                ),
+              ),
+            ),
+
+          const SizedBox(height: 80),
         ],
       ),
     );
