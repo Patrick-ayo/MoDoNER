@@ -22,7 +22,7 @@ class FlaggedIssuesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Get the localization object
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     // Mock data now uses the localization keys
     final List<Map<String, dynamic>> flaggedIssues = [

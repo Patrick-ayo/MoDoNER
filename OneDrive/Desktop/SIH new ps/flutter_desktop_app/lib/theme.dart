@@ -25,8 +25,7 @@ class AppTheme {
       onPrimary: Colors.white,
       onSecondary: Colors.white,
       // Define text colors for light theme
-      onSurface: textPrimary, // Main text color
-      onBackground: textPrimary,
+      onSurface: textPrimary,
     ),
     textTheme: TextTheme(
       displayLarge: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: textPrimary),
@@ -57,8 +56,7 @@ class AppTheme {
       onPrimary: Colors.white,
       onSecondary: Colors.white,
       // Define text colors for dark theme
-      onSurface: Colors.white, // Main text color
-      onBackground: Colors.white,
+      onSurface: Colors.white,
     ),
     textTheme: TextTheme(
       displayLarge: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
