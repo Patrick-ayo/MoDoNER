@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_desktop_app/gen/l10n/app_localizations.dart';
 import '../theme.dart';
 
 class RiskPredictionsCard extends StatelessWidget {
@@ -17,11 +18,13 @@ class RiskPredictionsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Mock data based on your backend response
+    final l10n = AppLocalizations.of(context)!;
+
+    // Mock data now uses the localization keys
     final List<Map<String, dynamic>> riskData = [
-      {'riskType': 'Cost Overrun Risk', 'averageScore': 70},
-      {'riskType': 'Timeline Risk', 'averageScore': 80},
-      {'riskType': 'Environmental Risk', 'averageScore': 50},
+      {'riskType': l10n.riskCostOverrun, 'averageScore': 70},
+      {'riskType': l10n.riskTimeline, 'averageScore': 80},
+      {'riskType': l10n.riskEnvironmental, 'averageScore': 45},
     ];
 
     return Card(
@@ -34,11 +37,10 @@ class RiskPredictionsCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'AI Risk Predictions',
+              l10n.aiRiskPredictions, // Using the localized title
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
-            // Use a Column to list the risk items vertically
             Column(
               children: riskData.map((risk) {
                 final score = risk['averageScore'] as num;
@@ -49,14 +51,16 @@ class RiskPredictionsCard extends StatelessWidget {
                     children: [
                       Text(
                         risk['riskType'],
-                        style: const TextStyle(color: Colors.white70, fontSize: 14),
+                        // FIX: Use the theme's text style
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       const SizedBox(height: 8),
                       LinearProgressIndicator(
-                        value: score / 100.0, // Progress bars need a value between 0.0 and 1.0
+                        value: score / 100.0,
                         minHeight: 8,
                         borderRadius: BorderRadius.circular(4),
-                        backgroundColor: Colors.grey.shade800,
+                        // FIX: Use a theme-aware background color
+                        backgroundColor: Theme.of(context).dividerColor.withOpacity(0.1),
                         color: _getColorForScore(score.toDouble()),
                       ),
                     ],

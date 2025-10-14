@@ -1,6 +1,7 @@
 name: flutter_desktop_app
 description: DPR Assessment System for MDoNER (Desktop)
 version: 1.0.0
+publish_to: "none"
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
@@ -8,6 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
   provider: ^6.0.0
   flutter_svg: ^2.0.4
   file_picker: ^5.0.1
@@ -16,13 +20,17 @@ dependencies:
   path_provider: ^2.0.9
   back_button_interceptor: ^6.0.0
   http: ^0.13.6
+  fl_chart: ^0.68.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  fl_chart: ^0.68.0
+  intl: any
 
 flutter:
+  uses-material-design: true
+  generate: true
+
   assets:
-    - assets/logo.png
+    - assets/
     - assets/icons/

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// Converted to a StatefulWidget to manage the hover state
 class StatCard extends StatefulWidget {
   final String value;
   final String label;
@@ -16,22 +15,20 @@ class StatCard extends StatefulWidget {
 }
 
 class _StatCardState extends State<StatCard> {
-  // This variable tracks if the mouse is currently over the card
   bool _isHovered = false;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final originalColor = Theme.of(context).colorScheme.surface;
-    final hoverColor = Colors.white12; // A subtle color for the hover effect
+    // Use a theme-aware hover color
+    final hoverColor = Theme.of(context).hoverColor;
 
-    // MouseRegion detects when the mouse enters or leaves the widget's area
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
-      cursor: SystemMouseCursors.click, // Changes the cursor to a hand
+      cursor: SystemMouseCursors.click,
       child: Card(
-        // The color and elevation now change based on the _isHovered state
         color: _isHovered ? hoverColor : originalColor,
         elevation: _isHovered ? 8.0 : 2.0,
         child: Padding(
@@ -42,18 +39,17 @@ class _StatCardState extends State<StatCard> {
               Text(
                 widget.value,
                 textAlign: TextAlign.center,
+                // Removed hardcoded color to use the theme's style
                 style: textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 widget.label,
                 textAlign: TextAlign.center,
-                style: textTheme.bodyMedium?.copyWith(
-                  color: Colors.white70,
-                ),
+                // Removed hardcoded color to use the theme's style
+                style: textTheme.bodyMedium,
               ),
             ],
           ),

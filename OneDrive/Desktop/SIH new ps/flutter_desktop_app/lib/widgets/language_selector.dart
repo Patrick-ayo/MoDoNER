@@ -57,8 +57,8 @@ class _LanguageButtonState extends State<_LanguageButton> {
               children: [
                 _buildItem('English', 'en'),
                 _buildItem('Hindi', 'hi'),
-                _buildItem('Bengali', 'bn'),
-                _buildItem('Tamil', 'ta'),
+                _buildItem('Assamese', 'as'),
+                // _buildItem('Tamil', 'ta'),
               ],
             ),
           ),
@@ -140,10 +140,8 @@ class _LanguageButtonState extends State<_LanguageButton> {
     switch (code) {
       case 'hi':
         return 'Hindi';
-      case 'bn':
-        return 'Bengali';
-      case 'ta':
-        return 'Tamil';
+      case 'as':
+        return 'Assamese';
       default:
         return 'English';
     }

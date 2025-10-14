@@ -8,23 +8,26 @@ class AppTheme {
   static const success = Color(0xFF10B981);
   static const warning = Color(0xFFF59E0B);
   static const error = Color(0xFFEF4444);
-  static const background = Color(0xFFF8F9FA);
+  static const background = Color(0xFFF8F9FA); // We'll use this for the light scaffold
   static const surface = Colors.white;
   static const textPrimary = Color(0xFF111827);
   static const textSecondary = Color(0xFF6B7280);
 
   static final light = ThemeData(
+    brightness: Brightness.light,
     primaryColor: primary,
-    scaffoldBackgroundColor: surface,
+    // FIX: Use a light grey background for the scaffold in light mode
+    scaffoldBackgroundColor: background,
     colorScheme: ColorScheme.light(
       primary: primary,
       secondary: secondary,
-      // note: avoid using background (deprecated) - prefer surface for scaffolds
-      surface: surface,
+      surface: surface, // Cards will be white
       onPrimary: Colors.white,
       onSecondary: Colors.white,
+      // Define text colors for light theme
+      onSurface: textPrimary, // Main text color
+      onBackground: textPrimary,
     ),
-    // Use the modern TextTheme names (display/ headline/ body) to be compatible with latest SDKs.
     textTheme: TextTheme(
       displayLarge: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: textPrimary),
       displayMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: textPrimary),
@@ -36,7 +39,6 @@ class AppTheme {
       titleLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: textPrimary),
       titleMedium: TextStyle(fontSize: 14, color: textSecondary),
     ),
-    // cardTheme removed for compatibility with this SDK's ThemeData signature.
     buttonTheme: ButtonThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       buttonColor: primary,
@@ -51,9 +53,12 @@ class AppTheme {
     colorScheme: ColorScheme.dark(
       primary: primary,
       secondary: secondary,
-      surface: const Color(0xFF111827),
+      surface: const Color(0xFF111827), // Cards will be dark grey
       onPrimary: Colors.white,
       onSecondary: Colors.white,
+      // Define text colors for dark theme
+      onSurface: Colors.white, // Main text color
+      onBackground: Colors.white,
     ),
     textTheme: TextTheme(
       displayLarge: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),

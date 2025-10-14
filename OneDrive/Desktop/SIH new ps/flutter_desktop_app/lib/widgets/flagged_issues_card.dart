@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_desktop_app/gen/l10n/app_localizations.dart';
 import '../theme.dart';
 
 class FlaggedIssuesCard extends StatelessWidget {
@@ -20,12 +21,15 @@ class FlaggedIssuesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Mock data based on your backend description and the UI image
+    // Get the localization object
+    final l10n = AppLocalizations.of(context)!;
+
+    // Mock data now uses the localization keys
     final List<Map<String, dynamic>> flaggedIssues = [
-      {'issue': 'Missing Cost Estimates', 'severity': 'High', 'count': 8},
-      {'issue': 'Inconsistent Timelines', 'severity': 'Medium', 'count': 15},
-      {'issue': 'Budget mismatch', 'severity': 'High', 'count': 5},
-      {'issue': 'Environmental Impact not addressed', 'severity': 'Low', 'count': 22},
+      {'issue': l10n.issueMissingCost, 'severity': 'High', 'count': 8},
+      {'issue': l10n.issueInconsistentTimelines, 'severity': 'Medium', 'count': 15},
+      {'issue': l10n.issueBudgetMismatch, 'severity': 'High', 'count': 5},
+      {'issue': l10n.issueEnvironmentalImpact, 'severity': 'Low', 'count': 22},
     ];
 
     return Card(
@@ -38,16 +42,14 @@ class FlaggedIssuesCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Flagged Issues',
+              l10n.flaggedIssues, // Using the localized title
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
-            // Using Wrap so the chips flow to the next line if space is tight
             Wrap(
-              spacing: 8.0, // Horizontal space between chips
-              runSpacing: 8.0, // Vertical space between lines of chips
+              spacing: 8.0,
+              runSpacing: 8.0,
               children: flaggedIssues.map((issueData) {
-                // Now we create an instance of our new, stateful _IssueChip widget
                 return _IssueChip(
                   text: issueData['issue'],
                   color: _getColorForSeverity(issueData['severity']),
@@ -61,8 +63,7 @@ class FlaggedIssuesCard extends StatelessWidget {
   }
 }
 
-
-// Step 1: Create a new private StatefulWidget for the chip
+// Private StatefulWidget for the chip to handle its own hover state
 class _IssueChip extends StatefulWidget {
   final String text;
   final Color color;
@@ -74,12 +75,15 @@ class _IssueChip extends StatefulWidget {
 }
 
 class _IssueChipState extends State<_IssueChip> {
-  // Step 2: Each chip now manages its own hover state
   bool _isHovered = false;
 
   @override
   Widget build(BuildContext context) {
-    // Step 3: Wrap in a MouseRegion to detect hover events
+    // Make the text color theme-aware
+    final textColor = Theme.of(context).brightness == Brightness.dark 
+      ? Colors.white
+      : Colors.black87;
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
@@ -87,8 +91,6 @@ class _IssueChipState extends State<_IssueChip> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
         decoration: BoxDecoration(
-          // Step 4: Dynamically change the color based on the hover state
-          // We blend the original color with a semi-transparent white to brighten it
           color: _isHovered 
               ? Color.alphaBlend(Colors.white.withOpacity(0.2), widget.color)
               : widget.color,
@@ -96,7 +98,7 @@ class _IssueChipState extends State<_IssueChip> {
         ),
         child: Text(
           widget.text,
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+          style: TextStyle(color: textColor, fontWeight: FontWeight.w500),
         ),
       ),
     );

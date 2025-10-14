@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme.dart'; 
+import '../theme.dart';
 
 class ActionButton extends StatelessWidget {
   final String text;
@@ -10,14 +10,13 @@ class ActionButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    this.isPrimary = false, // Defaults to the secondary (outlined) style
+    this.isPrimary = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    // We use Flutter's built-in buttons which handle hover effects automatically!
     if (isPrimary) {
-      // Return a solid, elevated button for the primary action
+      // The primary button style is fine for both themes
       return ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
@@ -31,17 +30,19 @@ class ActionButton extends StatelessWidget {
         child: Text(text),
       );
     } else {
-      // Return a more subtle, outlined button for secondary actions
+      // The secondary button is now theme-aware
       return OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          foregroundColor: Colors.white70,
+          // FIX: Use the theme's text color instead of a hardcoded white
+          foregroundColor: Theme.of(context).textTheme.bodyLarge?.color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          side: const BorderSide(
-            color: Colors.white24, // A faint border
+          // FIX: Use the theme's divider color for a suitable border in both modes
+          side: BorderSide(
+            color: Theme.of(context).dividerColor,
           ),
         ),
         child: Text(text),

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_desktop_app/gen/l10n/app_localizations.dart';
 import '../theme.dart';
 
 class EvaluationsChart extends StatefulWidget {
@@ -11,11 +12,14 @@ class EvaluationsChart extends StatefulWidget {
 }
 
 class _EvaluationsChartState extends State<EvaluationsChart> {
-  String _selectedInterval = 'Monthly';
+  // Use a non-translatable key for state management
+  String _selectedIntervalKey = 'Monthly'; 
 
   @override
   Widget build(BuildContext context) {
-    // Mock Data
+    final l10n = AppLocalizations.of(context)!;
+
+    // Mock Data...
     final List<String> monthlyCategories = ["May", "Jun", "Jul", "Aug", "Sep", "Oct"];
     final List<double> monthlyCompleted = [15, 40, 35, 43, 57, 29];
     final List<double> monthlyIncomplete = [2, 6, 9, 15, 10, 1];
@@ -23,7 +27,7 @@ class _EvaluationsChartState extends State<EvaluationsChart> {
     final List<double> yearlyCompleted = [120, 250, 180];
     final List<double> yearlyIncomplete = [30, 50, 40];
 
-    final bool isMonthly = _selectedInterval == 'Monthly';
+    final bool isMonthly = _selectedIntervalKey == 'Monthly';
     final List<String> categories = isMonthly ? monthlyCategories : yearlyCategories;
     final List<double> completedData = isMonthly ? monthlyCompleted : yearlyCompleted;
     final List<double> incompleteData = isMonthly ? monthlyIncomplete : yearlyIncomplete;
@@ -46,7 +50,7 @@ class _EvaluationsChartState extends State<EvaluationsChart> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Evaluations Over Time',
+                  l10n.evaluationsOverTime,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 _buildIntervalDropdown(),
@@ -62,7 +66,7 @@ class _EvaluationsChartState extends State<EvaluationsChart> {
                     show: true,
                     drawVerticalLine: false,
                     getDrawingHorizontalLine: (value) {
-                      return const FlLine(color: Colors.white10, strokeWidth: 1);
+                      return FlLine(color: Theme.of(context).dividerColor.withOpacity(0.1), strokeWidth: 1);
                     },
                   ),
                   titlesData: FlTitlesData(
@@ -79,7 +83,7 @@ class _EvaluationsChartState extends State<EvaluationsChart> {
                           if (index >= 0 && index < categories.length) {
                             return SideTitleWidget(
                               axisSide: meta.axisSide,
-                              child: Text(categories[index], style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                              child: Text(categories[index], style: Theme.of(context).textTheme.bodySmall),
                             );
                           }
                           return const Text('');
@@ -92,7 +96,7 @@ class _EvaluationsChartState extends State<EvaluationsChart> {
                         interval: interval,
                         reservedSize: 42,
                         getTitlesWidget: (value, meta) {
-                          return Text('${value.toInt()}', style: const TextStyle(color: Colors.white70, fontSize: 12));
+                          return Text('${value.toInt()}', style: Theme.of(context).textTheme.bodySmall);
                         },
                       ),
                     ),
@@ -111,9 +115,9 @@ class _EvaluationsChartState extends State<EvaluationsChart> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildLegendItem(AppTheme.success, 'Completed'),
+                _buildLegendItem(AppTheme.success, l10n.completed),
                 const SizedBox(width: 24),
-                _buildLegendItem(AppTheme.error, 'Incomplete'),
+                _buildLegendItem(AppTheme.error, l10n.incomplete),
               ],
             )
           ],
@@ -122,36 +126,37 @@ class _EvaluationsChartState extends State<EvaluationsChart> {
     );
   }
 
-  // --- UPDATED DROPDOWN WIDGET ---
   Widget _buildIntervalDropdown() {
-    return DropdownButton<String>(
-      value: _selectedInterval,
-      // Style properties to make it look clean and integrated
-      isDense: true, // Makes the button more compact
-      underline: const SizedBox(), // Hides the default underline
-      icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white70),
-      dropdownColor: const Color(0xFF1E293B), // A dark color for the menu
-      // Use the theme's text style for consistency
-      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
-      alignment: AlignmentDirectional.centerEnd, // Aligns the menu nicely
+    final l10n = AppLocalizations.of(context)!;
+    // Map non-translatable keys to their translated display values
+    final Map<String, String> intervalOptions = {
+      'Monthly': l10n.monthly,
+      'Yearly': l10n.yearly,
+    };
 
-      onChanged: (String? newValue) {
-        if (newValue != null) {
+    return DropdownButton<String>(
+      value: _selectedIntervalKey,
+      isDense: true,
+      underline: const SizedBox(),
+      icon: Icon(Icons.keyboard_arrow_down, color: Theme.of(context).textTheme.bodySmall?.color),
+      dropdownColor: Theme.of(context).cardColor,
+      style: Theme.of(context).textTheme.bodyMedium,
+      alignment: AlignmentDirectional.centerEnd,
+      onChanged: (String? newKey) {
+        if (newKey != null) {
           setState(() {
-            _selectedInterval = newValue;
+            _selectedIntervalKey = newKey;
           });
         }
       },
-      items: <String>['Monthly', 'Yearly']
-          .map<DropdownMenuItem<String>>((String value) {
+      items: intervalOptions.entries.map<DropdownMenuItem<String>>((entry) {
         return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
+          value: entry.key, // The internal value is the key (e.g., 'Monthly')
+          child: Text(entry.value), // The displayed text is the translation (e.g., 'मासिक')
         );
       }).toList(),
     );
   }
-  // --- END OF UPDATE ---
 
   Widget _buildLegendItem(Color color, String text) {
     return Row(
@@ -165,16 +170,14 @@ class _EvaluationsChartState extends State<EvaluationsChart> {
           ),
         ),
         const SizedBox(width: 8),
-        Text(text, style: const TextStyle(color: Colors.white70, fontSize: 12)),
+        Text(text, style: Theme.of(context).textTheme.bodySmall),
       ],
     );
   }
 
   LineChartBarData _buildLineChartBarData(List<double> data, Color color) {
     return LineChartBarData(
-      spots: data.asMap().entries.map((entry) {
-        return FlSpot(entry.key.toDouble(), entry.value);
-      }).toList(),
+      spots: data.asMap().entries.map((entry) => FlSpot(entry.key.toDouble(), entry.value)).toList(),
       isCurved: true,
       color: color,
       barWidth: 4,
