@@ -1,0 +1,11 @@
+Category,Description,Cost (INR Lakhs),Cost (USD),Justification
+Human Resources,Development team salaries for 21 months,180,216000,20 team members × ₹9L average annual cost × 1.75 years
+Infrastructure & Cloud Services,"Cloud hosting, storage, computing resources",45,54000,"AWS/Azure services for development, testing, and production"
+Software Licenses & Tools,"Development tools, AI/ML platforms, database licenses",25,30000,"GitHub Enterprise, AWS AI services, database licenses"
+Hardware & Equipment,"Development workstations, servers, testing equipment",15,18000,"Development laptops, testing devices, networking equipment"
+Training & Documentation,"User training, documentation creation, workshops",12,14400,"Training materials, workshops, user guides, video tutorials"
+Testing & Quality Assurance,"Testing infrastructure, security audits, performance testing",18,21600,"Automated testing tools, security scanning, performance testing"
+Deployment & Operations,"Production deployment, monitoring tools, backup systems",20,24000,"CI/CD pipelines, monitoring, backup and disaster recovery"
+Contingency & Risk Buffer,15% buffer for unforeseen challenges and scope changes,47,56400,Standard 15% contingency for government projects
+Project Management,"Project coordination, administrative costs",25,30000,Project management overhead and administrative expenses
+Maintenance (Year 1),"System maintenance, support, minor updates",35,42000,Post-deployment support and maintenance activities
