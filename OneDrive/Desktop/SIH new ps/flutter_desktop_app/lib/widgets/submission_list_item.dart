@@ -38,7 +38,7 @@ class SubmissionListItem extends StatelessWidget {
 
   // Helper to build the visual risk indicator
   Widget _buildRiskIndicator(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [

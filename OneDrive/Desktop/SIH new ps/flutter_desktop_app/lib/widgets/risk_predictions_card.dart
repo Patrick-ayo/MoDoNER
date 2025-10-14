@@ -18,7 +18,7 @@ class RiskPredictionsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     // Mock data now uses the localization keys
     final List<Map<String, dynamic>> riskData = [

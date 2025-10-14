@@ -6,9 +6,6 @@ import '../widgets/flagged_issues_card.dart';
 import '../widgets/risk_predictions_card.dart';
 import '../widgets/stat_card.dart';
 import '../widgets/submission_list_item.dart';
-import '../widgets/svg_icon.dart';
-import 'analysis_screen.dart';
-import '../theme.dart';
 
 enum HomeTab { analytics, flaggedIssues, riskPrediction }
 

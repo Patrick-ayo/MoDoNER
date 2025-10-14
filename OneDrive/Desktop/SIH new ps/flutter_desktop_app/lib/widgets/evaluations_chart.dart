@@ -17,7 +17,7 @@ class _EvaluationsChartState extends State<EvaluationsChart> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     // Mock Data...
     final List<String> monthlyCategories = ["May", "Jun", "Jul", "Aug", "Sep", "Oct"];
@@ -127,7 +127,7 @@ class _EvaluationsChartState extends State<EvaluationsChart> {
   }
 
   Widget _buildIntervalDropdown() {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     // Map non-translatable keys to their translated display values
     final Map<String, String> intervalOptions = {
       'Monthly': l10n.monthly,
