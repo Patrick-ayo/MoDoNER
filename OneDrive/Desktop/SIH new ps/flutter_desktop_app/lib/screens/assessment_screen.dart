@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../theme.dart';
 import '../widgets/charts/approval_rate_chart.dart';
 import '../widgets/charts/common_issues_chart.dart';
-import '../widgets/charts/average_risk_chart.dart'; // Import the new chart
+import '../widgets/charts/average_risk_chart.dart';
+import '../widgets/charts/compliance_bar_chart.dart'; // Import the final chart
 
 class AnalyticsScreen extends StatefulWidget {
   const AnalyticsScreen({super.key});
@@ -53,31 +54,16 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> with SingleTickerProv
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: [
-                const ApprovalRateChart(),
-                const CommonIssuesChart(),
-                
-                // The new chart is now in the third tab
-                const AverageRiskChart(),
-                
-                _buildChartPlaceholder('Compliance Score vs. Final Outcome (Scatter Plot)'),
+              children: const [
+                ApprovalRateChart(),
+                CommonIssuesChart(),
+                AverageRiskChart(),
+                // The final chart is now in the fourth tab
+                ComplianceBarChart(),
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildChartPlaceholder(String chartName) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Text(
-          '$chartName\nwill be built here.',
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
       ),
     );
   }

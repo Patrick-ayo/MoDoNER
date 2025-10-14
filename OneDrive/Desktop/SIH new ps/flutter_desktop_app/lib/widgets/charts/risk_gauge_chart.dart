@@ -22,6 +22,7 @@ class RiskGaugeChart extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        const SizedBox(height: 16),
         SizedBox(
           width: 120,
           height: 120,
