@@ -58,7 +58,7 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   final List<Widget> _screens = [
     HomeScreen(), // ❌ removed const
-    AssessmentScreen(),
+    AnalyticsScreen(),
     ReportsScreen(),
     AdminScreen(),
   ];
@@ -101,7 +101,7 @@ class _MainScaffoldState extends State<MainScaffold> {
           BottomNavigationBarItem(
             icon: SvgIcon('assets/icons/dashboard.svg',
                 color: _currentIndex == 1 ? AppTheme.accentCyan : null),
-            label: l10n.assessment,
+            label: l10n.analytics,
           ),
           BottomNavigationBarItem(
             icon: SvgIcon('assets/icons/reports.svg',

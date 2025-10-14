@@ -1,59 +1,83 @@
 import 'package:flutter/material.dart';
-import '../widgets/progress_bar.dart';
-import '../widgets/risk_indicator.dart';
-import '../widgets/metric_card.dart';
+import '../theme.dart';
+import '../widgets/charts/approval_rate_chart.dart';
+import '../widgets/charts/common_issues_chart.dart';
+import '../widgets/charts/average_risk_chart.dart'; // Import the new chart
 
-class AssessmentScreen extends StatelessWidget {
+class AnalyticsScreen extends StatefulWidget {
+  const AnalyticsScreen({super.key});
+
+  @override
+  State<AnalyticsScreen> createState() => _AnalyticsScreenState();
+}
+
+class _AnalyticsScreenState extends State<AnalyticsScreen> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Example static data
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Assessment Dashboard', style: Theme.of(context).textTheme.displayMedium),
-          SizedBox(height: 8),
-          Text('Real-time monitoring of DPR progress', style: Theme.of(context).textTheme.bodyMedium),
-          SizedBox(height: 24),
+          Text('Analytics', style: Theme.of(context).textTheme.headlineLarge),
+          const SizedBox(height: 4),
+          Text('In-depth project insights', style: Theme.of(context).textTheme.bodyMedium),
+          const SizedBox(height: 24),
 
-          Card(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(child: Text('NH-37 Highway Extension Project', style: Theme.of(context).textTheme.headlineSmall)),
-                      RiskIndicator(level: 'Medium'),
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                  Text('Road Construction • Assam • ₹450 Crores'),
-                  SizedBox(height: 16),
-                  const ProgressBar(percentage: 100, color: Colors.green),
-                  const SizedBox(height: 8),
-                  ProgressBar(percentage: 87, color: Theme.of(context).colorScheme.primary),
-                  const SizedBox(height: 8),
-                  const ProgressBar(percentage: 73, color: Colors.orange),
-                ],
-              ),
-            ),
-          ),
-
-          SizedBox(height: 24),
-
-          Text('Live System Metrics', style: Theme.of(context).textTheme.headlineLarge),
-          Wrap(
-            spacing: 8,
-            children: [
-              MetricCard(icon: Icons.hourglass_empty, title: 'Queue', value: '12', borderColor: Colors.orange),
-              MetricCard(icon: Icons.check, title: 'Completed', value: '8', borderColor: Colors.green),
-              MetricCard(icon: Icons.storage, title: 'Load', value: '67%', borderColor: Theme.of(context).primaryColor),
-              MetricCard(icon: Icons.assessment, title: 'Accuracy', value: '94.3%', borderColor: Color(0xFF059669)),
+          TabBar(
+            controller: _tabController,
+            isScrollable: true,
+            tabAlignment: TabAlignment.start,
+            tabs: const [
+              Tab(text: 'Approval Rate'),
+              Tab(text: 'Avg Issues'),
+              Tab(text: 'Avg Risk'),
+              Tab(text: 'Compliance vs. Outcome'),
             ],
           ),
+
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                const ApprovalRateChart(),
+                const CommonIssuesChart(),
+                
+                // The new chart is now in the third tab
+                const AverageRiskChart(),
+                
+                _buildChartPlaceholder('Compliance Score vs. Final Outcome (Scatter Plot)'),
+              ],
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildChartPlaceholder(String chartName) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Text(
+          '$chartName\nwill be built here.',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
     );
   }
