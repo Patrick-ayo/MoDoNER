@@ -1,0 +1,9 @@
+- [x] Add import for flutter_svg package to use SvgPicture
+- [x] Add reports.svg icon next to the "Reports & Analytics" title
+- [x] Add leading icons to report type ChoiceChips (person, calendar, compare, check_circle)
+- [x] Remove changes made to reports_screen.dart
+- [x] Add emojis to search hint text and filter button label
+- [x] Replace emojis with proper icons for ChoiceChips
+- [x] Add emojis to report type ChoiceChips labels
+- [x] Remove Upload button from Export Options
+- [x] Add search and filter IconButtons to reports_screen.dart

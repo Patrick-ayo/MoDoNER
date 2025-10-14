@@ -117,11 +117,19 @@ class _LanguageButtonState extends State<_LanguageButton> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.language, size: 18),
+            Icon(
+              Icons.language,
+              size: 20,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             const SizedBox(width: 8),
             Text(label, style: const TextStyle(fontSize: 14)),
             const SizedBox(width: 6),
-            const Icon(Icons.arrow_drop_down, size: 18),
+            Icon(
+              Icons.arrow_drop_down,
+              size: 20,
+              color: Theme.of(context).colorScheme.primary,
+            ),
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import '../widgets/svg_icon.dart';
 
 class UploadScreen extends StatefulWidget {
   final PlatformFile? initialFile;
@@ -137,6 +138,7 @@ class _UploadScreenState extends State<UploadScreen> {
                   spacing: 8,
                   children: ['English', 'Hindi', 'Assamese']
                       .map((lang) => ChoiceChip(
+                            avatar: SvgIcon('assets/icons/${lang.toLowerCase()}.svg'),
                             label: Text(lang),
                             selected: _language == lang,
                             selectedColor: Theme.of(context).colorScheme.primary.withAlpha((0.12 * 255).round()),
@@ -154,7 +156,7 @@ class _UploadScreenState extends State<UploadScreen> {
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: (_pickedFile != null && _projectType != null) ? () {} : null,
-                    icon: const Icon(Icons.upload_file),
+                    icon: SvgIcon('assets/icons/upload.svg'),
                     label: const Text('Upload & Start Assessment'),
                   ),
                 ),
