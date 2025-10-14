@@ -34,28 +34,29 @@ class AverageRiskChart extends StatelessWidget {
               'Average Risk Predictions',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            
-            // --- FIX IS HERE ---
-            // Increased the height for more top padding. You can adjust this value.
             const SizedBox(height: 24),
             
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: riskData.map((data) {
-                  final double score = data['score'];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: RiskGaugeChart(
-                      color: _getColorForScore(score),
-                      title: data['title'],
-                      score: score,
-                      maxScore: data['maxScore'],
-                      percentage: data['percentage'],
-                    ),
-                  );
-                }).toList(),
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1.0, // <-- DECREASED THIS VALUE for more vertical space
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
               ),
+              itemCount: riskData.length,
+              itemBuilder: (context, index) {
+                final data = riskData[index];
+                final double score = data['score'];
+                return RiskGaugeChart(
+                  color: _getColorForScore(score),
+                  title: data['title'],
+                  score: score,
+                  maxScore: data['maxScore'],
+                  percentage: data['percentage'],
+                );
+              },
             ),
           ],
         ),

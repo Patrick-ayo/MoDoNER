@@ -41,6 +41,18 @@ class ComplianceBarChart extends StatelessWidget {
                 );
               }).toList(),
             ),
+            
+            // --- FIX IS HERE: Added Legend ---
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildLegendItem(context, AppTheme.success, 'Approved'),
+                const SizedBox(width: 24),
+                _buildLegendItem(context, AppTheme.error, 'Rejected'),
+              ],
+            ),
+            // --- END OF FIX ---
           ],
         ),
       ),
@@ -62,9 +74,8 @@ class ComplianceBarChart extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          // Label on the left
           SizedBox(
-            width: 60, // Fixed width for score range labels
+            width: 60,
             child: Text(
               label,
               style: Theme.of(context).textTheme.bodySmall,
@@ -72,7 +83,6 @@ class ComplianceBarChart extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          // Stacked bar on the right
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
@@ -80,17 +90,11 @@ class ComplianceBarChart extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: (approvedFraction * 100).toInt(),
-                    child: Container(
-                      height: 12,
-                      color: AppTheme.success,
-                    ),
+                    child: Container(height: 12, color: AppTheme.success),
                   ),
                   Expanded(
                     flex: (rejectedFraction * 100).toInt(),
-                    child: Container(
-                      height: 12,
-                      color: AppTheme.error,
-                    ),
+                    child: Container(height: 12, color: AppTheme.error),
                   ),
                 ],
               ),
@@ -98,6 +102,18 @@ class ComplianceBarChart extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+  
+  // Helper to build a single legend item
+  Widget _buildLegendItem(BuildContext context, Color color, String text) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(Icons.circle, color: color, size: 10),
+        const SizedBox(width: 6),
+        Text(text, style: Theme.of(context).textTheme.bodySmall),
+      ],
     );
   }
 }
