@@ -9,11 +9,11 @@ class FlaggedIssuesCard extends StatelessWidget {
   Color _getColorForSeverity(String severity) {
     switch (severity.toLowerCase()) {
       case 'high':
-        return AppTheme.error.withOpacity(0.7);
+  return AppTheme.error.withAlpha((0.7 * 255).round());
       case 'medium':
-        return AppTheme.warning.withOpacity(0.7);
+  return AppTheme.warning.withAlpha((0.7 * 255).round());
       case 'low':
-        return AppTheme.success.withOpacity(0.7);
+  return AppTheme.success.withAlpha((0.7 * 255).round());
       default:
         return Colors.grey.shade700;
     }
@@ -46,16 +46,20 @@ class FlaggedIssuesCard extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
-            Wrap(
-              spacing: 8.0,
-              runSpacing: 8.0,
-              children: flaggedIssues.map((issueData) {
-                return _IssueChip(
-                  text: issueData['issue'],
-                  color: _getColorForSeverity(issueData['severity']),
-                );
-              }).toList(),
-            ),
+            LayoutBuilder(builder: (context, constraints) {
+              final isNarrow = constraints.maxWidth < 700;
+              return Wrap(
+                spacing: 8.0,
+                runSpacing: 8.0,
+                alignment: isNarrow ? WrapAlignment.center : WrapAlignment.start,
+                children: flaggedIssues.map((issueData) {
+                  return _IssueChip(
+                    text: issueData['issue'],
+                    color: _getColorForSeverity(issueData['severity']),
+                  );
+                }).toList(),
+              );
+            }),
           ],
         ),
       ),
@@ -89,16 +93,23 @@ class _IssueChipState extends State<_IssueChip> {
       onExit: (_) => setState(() => _isHovered = false),
       cursor: SystemMouseCursors.click,
       child: Container(
+        constraints: const BoxConstraints(maxWidth: 220),
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
         decoration: BoxDecoration(
           color: _isHovered 
-              ? Color.alphaBlend(Colors.white.withOpacity(0.2), widget.color)
+              ? Color.alphaBlend(Colors.white.withAlpha((0.2 * 255).round()), widget.color)
               : widget.color,
           borderRadius: BorderRadius.circular(16.0),
         ),
-        child: Text(
-          widget.text,
-          style: TextStyle(color: textColor, fontWeight: FontWeight.w500),
+        child: SizedBox(
+          width: 200,
+          child: Text(
+            widget.text,
+            style: TextStyle(color: textColor, fontWeight: FontWeight.w500),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            softWrap: true,
+          ),
         ),
       ),
     );

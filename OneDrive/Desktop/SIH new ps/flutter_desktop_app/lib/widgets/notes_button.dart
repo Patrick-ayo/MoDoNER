@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
 
 // Helper widget for a single note item
 class _NoteItem extends StatelessWidget {

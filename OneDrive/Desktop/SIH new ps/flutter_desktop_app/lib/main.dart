@@ -12,6 +12,7 @@ import 'screens/assessment_screen.dart';
 import 'screens/reports_screen.dart';
 import 'screens/admin_screen.dart';
 import 'widgets/svg_icon.dart';
+import 'provider/admin_provider.dart';
 
 void main() {
   runApp(
@@ -19,6 +20,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => LanguageProvider()),
+        ChangeNotifierProvider(create: (_) => AdminProvider()),
       ],
       child: const DPRAssessmentApp(),
     ),

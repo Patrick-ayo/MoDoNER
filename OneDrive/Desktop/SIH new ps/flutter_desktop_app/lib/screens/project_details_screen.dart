@@ -1,7 +1,6 @@
 // lib/screens/project_details_screen.dart
 import 'package:flutter/material.dart';
 import '../theme.dart';
-import '../widgets/progress_bar.dart';
 import '../widgets/risk_indicator.dart';
 import '../widgets/notes_button.dart';
 import '../widgets/chatbot_popup.dart';
@@ -41,8 +40,7 @@ class ProjectDetailsScreen extends StatelessWidget {
     final String riskLevel = projectData['riskLevel'] ?? 'Pending';
     final String projectStatus = 'Pending'; // Example status, could be from projectData
     final String dprDocumentName = 'NATIONAL HIGHWAY CORRIDOR...';
-    final String chatbotMessage = 'Check for missing data';
-    final String chatbotUserDate = 'Apr 26, 2024 - John Doe';
+  // chatbot message/date removed (not used in current UI)
 
     // Dummy notes data
     final List<Map<String, dynamic>> projectNotes = [
@@ -72,45 +70,53 @@ class ProjectDetailsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Project Title and Status Tag
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    projectName,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: _getRiskColor(projectStatus).withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: _getRiskColor(projectStatus), width: 1),
-                  ),
-                  child: Text(
-                    projectStatus,
-                    style: TextStyle(
-                      color: _getRiskColor(projectStatus),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
+            LayoutBuilder(builder: (context, constraints) {
+              final isNarrow = constraints.maxWidth < 420;
+              return Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      projectName,
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                ),
-              ],
-            ),
+                  const SizedBox(width: 12),
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: _getRiskColor(projectStatus).withAlpha((0.2 * 255).round()),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: _getRiskColor(projectStatus), width: 1),
+                      ),
+                      child: Text(
+                        projectStatus,
+                        style: TextStyle(
+                          color: _getRiskColor(projectStatus),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }),
             const SizedBox(height: 24),
 
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Project Summary',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    'Project Summary',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                  ),
                 ),
-                NotesButton(notes: projectNotes),
+                Flexible(child: NotesButton(notes: projectNotes)),
               ],
             ),
             const SizedBox(height: 12),
@@ -125,14 +131,28 @@ class ProjectDetailsScreen extends StatelessWidget {
                   children: [
                     Text('AI Analysis: In Progress', style: Theme.of(context).textTheme.bodyLarge),
                     const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        _buildGauge('Cost overrun', 0.68, AppTheme.error),
-                        _buildGauge('Timeline', 0.55, AppTheme.warning),
-                        _buildGauge('Environmental', 0.40, AppTheme.success),
-                      ],
-                    ),
+                    LayoutBuilder(builder: (context, constraints) {
+                      final isNarrow = constraints.maxWidth < 360;
+                      if (isNarrow) {
+                        return Column(
+                          children: [
+                            _buildGauge('Cost overrun', 0.68, AppTheme.error),
+                            const SizedBox(height: 8),
+                            _buildGauge('Timeline', 0.55, AppTheme.warning),
+                            const SizedBox(height: 8),
+                            _buildGauge('Environmental', 0.40, AppTheme.success),
+                          ],
+                        );
+                      }
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          _buildGauge('Cost overrun', 0.68, AppTheme.error),
+                          _buildGauge('Timeline', 0.55, AppTheme.warning),
+                          _buildGauge('Environmental', 0.40, AppTheme.success),
+                        ],
+                      );
+                    }),
                   ],
                 ),
               ),
@@ -278,7 +298,7 @@ class ProjectDetailsScreen extends StatelessWidget {
                 child: CircularProgressIndicator(
                   value: value,
                   strokeWidth: 6,
-                  backgroundColor: color.withOpacity(0.2),
+                  backgroundColor: color.withAlpha((0.2 * 255).round()),
                   valueColor: AlwaysStoppedAnimation<Color>(color),
                 ),
               ),
@@ -342,7 +362,7 @@ class ProjectDetailsScreen extends StatelessWidget {
                 Expanded(
                   child: Container(
                     width: 2,
-                    color: Theme.of(context).dividerColor.withOpacity(0.5),
+                    color: Theme.of(context).dividerColor.withAlpha((0.5 * 255).round()),
                   ),
                 ),
             ],

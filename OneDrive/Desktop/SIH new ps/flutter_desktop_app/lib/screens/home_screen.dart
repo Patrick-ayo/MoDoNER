@@ -52,20 +52,43 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(child: StatCard(value: '120', label: 'Total DPRs Submitted')),
-                const SizedBox(width: 12),
-                Expanded(child: StatCard(value: '95', label: 'Completed Evaluations')),
-                const SizedBox(width: 12),
-                Expanded(child: StatCard(value: '80%', label: 'Average Complete')),
-                const SizedBox(width: 12),
-                Expanded(child: StatCard(value: '10', label: 'Active Projects')),
-              ],
-            ),
-          ),
+          LayoutBuilder(builder: (context, constraints) {
+            final isNarrow = constraints.maxWidth < 700;
+            if (isNarrow) {
+              return SizedBox(
+                height: 120,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(children: [
+                    const SizedBox(width: 8),
+                    SizedBox(width: 220, child: StatCard(value: '120', label: 'Total DPRs Submitted')),
+                    const SizedBox(width: 12),
+                    SizedBox(width: 220, child: StatCard(value: '95', label: 'Completed Evaluations')),
+                    const SizedBox(width: 12),
+                    SizedBox(width: 220, child: StatCard(value: '80%', label: 'Average Complete')),
+                    const SizedBox(width: 12),
+                    SizedBox(width: 220, child: StatCard(value: '10', label: 'Active Projects')),
+                    const SizedBox(width: 8),
+                  ]),
+                ),
+              );
+            }
+
+            return IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(child: StatCard(value: '120', label: 'Total DPRs Submitted')),
+                  const SizedBox(width: 12),
+                  Expanded(child: StatCard(value: '95', label: 'Completed Evaluations')),
+                  const SizedBox(width: 12),
+                  Expanded(child: StatCard(value: '80%', label: 'Average Complete')),
+                  const SizedBox(width: 12),
+                  Expanded(child: StatCard(value: '10', label: 'Active Projects')),
+                ],
+              ),
+            );
+          }),
           const SizedBox(height: 24),
           Row(
             children: [

@@ -36,7 +36,7 @@ class ProjectLogItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: _getRiskColor(riskLevel).withOpacity(0.2),
+  color: _getRiskColor(riskLevel).withAlpha((0.2 * 255).round()),
         borderRadius: BorderRadius.circular(4),
         border: Border.all(color: _getRiskColor(riskLevel), width: 1),
       ),
@@ -68,16 +68,19 @@ class ProjectLogItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(name, style: Theme.of(context).textTheme.titleLarge),
-                      const SizedBox(height: 4),
-                      Text(id, style: Theme.of(context).textTheme.bodySmall),
-                    ],
+                  // Make the left column expand and truncate to avoid overflow
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(name, style: Theme.of(context).textTheme.titleLarge, overflow: TextOverflow.ellipsis),
+                        const SizedBox(height: 4),
+                        Text(id, style: Theme.of(context).textTheme.bodySmall, overflow: TextOverflow.ellipsis),
+                      ],
+                    ),
                   ),
+                  const SizedBox(width: 12),
                   _buildRiskTag(context),
                 ],
               ),
@@ -86,17 +89,20 @@ class ProjectLogItem extends StatelessWidget {
                 value: progress / 100.0,
                 minHeight: 6,
                 borderRadius: BorderRadius.circular(3),
-                backgroundColor: Theme.of(context).dividerColor.withOpacity(0.1),
+                backgroundColor: Theme.of(context).dividerColor.withAlpha((0.1 * 255).round()),
                 color: AppTheme.primaryLight,
               ),
               const SizedBox(height: 8),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Latest submission: $submissionDate',
-                    style: Theme.of(context).textTheme.bodySmall,
+                  Expanded(
+                    child: Text(
+                      'Latest submission: $submissionDate',
+                      style: Theme.of(context).textTheme.bodySmall,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
+                  const SizedBox(width: 8),
                   Icon(Icons.keyboard_arrow_down, color: Theme.of(context).textTheme.bodySmall?.color),
                 ],
               )

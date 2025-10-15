@@ -45,26 +45,32 @@ class AnalysisScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        s['name'] as String,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: _qualityColor(context, s['quality'] as String),
-                          borderRadius: BorderRadius.circular(12),
+                  LayoutBuilder(builder: (context, constraints) {
+                    final isNarrow = constraints.maxWidth < 360;
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            s['name'] as String,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                        child: Text(
-                          s['quality'] as String,
-                          style: const TextStyle(color: Colors.white),
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: _qualityColor(context, s['quality'] as String),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            s['quality'] as String,
+                            style: const TextStyle(color: Colors.white),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    );
+                  }),
                   const SizedBox(height: 8),
                   Text('Issues: ${s['issues']}'),
                   const SizedBox(height: 8),

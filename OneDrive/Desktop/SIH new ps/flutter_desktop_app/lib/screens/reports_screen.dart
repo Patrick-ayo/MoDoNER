@@ -211,6 +211,8 @@ class _GenerateReportViewState extends State<GenerateReportView> {
                 const SizedBox(height: 8),
                 // Status Filter
                 DropdownButtonFormField<TaskStatus>(
+                  isExpanded: true,
+                  isDense: true,
                   initialValue: selectedStatus,
                   decoration: const InputDecoration(
                     labelText: 'Status',
@@ -232,6 +234,8 @@ class _GenerateReportViewState extends State<GenerateReportView> {
                 const SizedBox(height: 8),
                 // Sector Filter with categories
                 DropdownButtonFormField<String>(
+                  isExpanded: true,
+                  isDense: true,
                   initialValue: selectedSector,
                   decoration: const InputDecoration(
                     labelText: 'Sector',
@@ -267,6 +271,8 @@ class _GenerateReportViewState extends State<GenerateReportView> {
                 const SizedBox(height: 8),
                 // Risk Level Filter
                 DropdownButtonFormField<RiskLevel>(
+                  isExpanded: true,
+                  isDense: true,
                   initialValue: selectedRiskLevel,
                   decoration: const InputDecoration(
                     labelText: 'Risk Level',
@@ -360,7 +366,7 @@ class _GenerateReportViewState extends State<GenerateReportView> {
               selectedSector != 'All' ||
               selectedRiskLevel != RiskLevel.all)
             Card(
-              color: AppTheme.accentCyan.withOpacity(0.1),
+              color: AppTheme.accentCyan.withAlpha((0.1 * 255).round()),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
@@ -734,6 +740,8 @@ class _ProjectLogsViewState extends State<ProjectLogsView> {
                 const SizedBox(height: 8),
                 // Status Filter
                 DropdownButtonFormField<TaskStatus>(
+                  isExpanded: true,
+                  isDense: true,
                   initialValue: selectedStatus,
                   decoration: const InputDecoration(
                     labelText: 'Status',
@@ -755,6 +763,8 @@ class _ProjectLogsViewState extends State<ProjectLogsView> {
                 const SizedBox(height: 8),
                 // Sector Filter with categories
                 DropdownButtonFormField<String>(
+                  isExpanded: true,
+                  isDense: true,
                   initialValue: selectedSector,
                   decoration: const InputDecoration(
                     labelText: 'Sector',
@@ -790,6 +800,8 @@ class _ProjectLogsViewState extends State<ProjectLogsView> {
                 const SizedBox(height: 8),
                 // Risk Level Filter
                 DropdownButtonFormField<RiskLevel>(
+                  isExpanded: true,
+                  isDense: true,
                   initialValue: selectedRiskLevel,
                   decoration: const InputDecoration(
                     labelText: 'Risk Level',
@@ -881,7 +893,7 @@ class _ProjectLogsViewState extends State<ProjectLogsView> {
             selectedSector != 'All' ||
             selectedRiskLevel != RiskLevel.all)
           Card(
-            color: AppTheme.accentCyan.withOpacity(0.1),
+            color: AppTheme.accentCyan.withAlpha((0.1 * 255).round()),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(

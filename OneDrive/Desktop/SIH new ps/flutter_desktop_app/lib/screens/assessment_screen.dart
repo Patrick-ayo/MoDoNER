@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
 import '../widgets/charts/approval_rate_chart.dart';
 import '../widgets/charts/common_issues_chart.dart';
 import '../widgets/charts/average_risk_chart.dart';

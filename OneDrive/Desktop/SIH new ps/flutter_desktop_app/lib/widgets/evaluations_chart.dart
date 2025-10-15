@@ -47,13 +47,26 @@ class _EvaluationsChartState extends State<EvaluationsChart> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  l10n.evaluationsOverTime,
-                  style: Theme.of(context).textTheme.titleLarge,
+                // Make the title take available space and truncate if needed to
+                // avoid RenderFlex overflow on narrow screens.
+                Expanded(
+                  child: Text(
+                    l10n.evaluationsOverTime,
+                    style: Theme.of(context).textTheme.titleLarge,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-                _buildIntervalDropdown(),
+                const SizedBox(width: 12),
+                // Constrain the dropdown so it doesn't force the row wider than
+                // the available space on small devices.
+                SizedBox(
+                  width: 130,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: _buildIntervalDropdown(),
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 24),
@@ -66,7 +79,7 @@ class _EvaluationsChartState extends State<EvaluationsChart> {
                     show: true,
                     drawVerticalLine: false,
                     getDrawingHorizontalLine: (value) {
-                      return FlLine(color: Theme.of(context).dividerColor.withOpacity(0.1), strokeWidth: 1);
+                      return FlLine(color: Theme.of(context).dividerColor.withAlpha((0.1 * 255).round()), strokeWidth: 1);
                     },
                   ),
                   titlesData: FlTitlesData(

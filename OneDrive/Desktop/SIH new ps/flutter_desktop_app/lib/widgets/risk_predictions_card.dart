@@ -45,26 +45,35 @@ class RiskPredictionsCard extends StatelessWidget {
               children: riskData.map((risk) {
                 final score = risk['averageScore'] as num;
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        risk['riskType'],
-                        // FIX: Use the theme's text style
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      const SizedBox(height: 8),
-                      LinearProgressIndicator(
-                        value: score / 100.0,
-                        minHeight: 8,
-                        borderRadius: BorderRadius.circular(4),
-                        // FIX: Use a theme-aware background color
-                        backgroundColor: Theme.of(context).dividerColor.withOpacity(0.1),
-                        color: _getColorForScore(score.toDouble()),
-                      ),
-                    ],
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
+                  child: LayoutBuilder(builder: (context, constraints) {
+                    final isNarrow = constraints.maxWidth < 360;
+                    return Row(
+                      children: [
+                        Expanded(
+                          flex: isNarrow ? 4 : 3,
+                          child: Text(
+                            risk['riskType'],
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          flex: isNarrow ? 6 : 5,
+                          child: LinearProgressIndicator(
+                            value: score / 100.0,
+                            minHeight: 8,
+                            borderRadius: BorderRadius.circular(4),
+                            backgroundColor: Theme.of(context).dividerColor.withAlpha((0.1 * 255).round()),
+                            color: _getColorForScore(score.toDouble()),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        SizedBox(width: isNarrow ? 40 : 44, child: Text('${score.toInt()}%', style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.right)),
+                      ],
+                    );
+                  }),
                 );
               }).toList(),
             ),

@@ -19,52 +19,82 @@ class RiskGaugeChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(height: 16),
-        SizedBox(
-          width: 120,
-          height: 120,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              // The background track
-              CircularProgressIndicator(
-                value: 1.0,
-                strokeWidth: 10,
-                backgroundColor: Theme.of(context).dividerColor.withOpacity(0.1),
-                valueColor: AlwaysStoppedAnimation<Color>(color),
-              ),
-              // The foreground progress
-              CircularProgressIndicator(
-                value: (score / maxScore).clamp(0.0, 1.0),
-                strokeWidth: 10,
-                valueColor: AlwaysStoppedAnimation<Color>(color),
-                strokeCap: StrokeCap.round,
-              ),
-              // The text in the center
-              Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      percentage,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(color: color),
-                    ),
-                    Text(
-                      '$score / $maxScore',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
+    return LayoutBuilder(builder: (context, constraints) {
+      // Determine the available size and scale the gauge accordingly.
+      final availWidth = constraints.maxWidth.isFinite ? constraints.maxWidth : 140.0;
+      final availHeight = constraints.maxHeight.isFinite ? constraints.maxHeight : 200.0;
+      // Reserve some space for title and padding; gauge should fit within the remaining area.
+      final gaugeMax = min(availWidth, availHeight - 48).clamp(48.0, 160.0);
+      final stroke = (gaugeMax * 0.08).clamp(4.0, 12.0);
+      final centerFont = (gaugeMax * 0.18).clamp(10.0, 24.0);
+      final subFont = (gaugeMax * 0.10).clamp(8.0, 14.0);
+
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: gaugeMax,
+            height: gaugeMax,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                // Background track
+                CircularProgressIndicator(
+                  value: 1.0,
+                  strokeWidth: stroke,
+                  backgroundColor: Theme.of(context).dividerColor.withAlpha((0.08 * 255).round()),
+                  valueColor: AlwaysStoppedAnimation<Color>(color),
                 ),
-              ),
-            ],
+                // Foreground progress
+                CircularProgressIndicator(
+                  value: (score / maxScore).clamp(0.0, 1.0),
+                  strokeWidth: stroke,
+                  valueColor: AlwaysStoppedAnimation<Color>(color),
+                  strokeCap: StrokeCap.round,
+                ),
+                // Center text (scale down if needed)
+                Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          percentage,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: color, fontSize: centerFont),
+                        ),
+                      ),
+                      SizedBox(height: gaugeMax * 0.03),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          '$score / $maxScore',
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: subFont),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 12),
-        Text(title, style: Theme.of(context).textTheme.bodyMedium),
-      ],
-    );
+          const SizedBox(height: 6),
+          SizedBox(
+            width: gaugeMax,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.bodyMedium,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
+      );
+    });
   }
 }
