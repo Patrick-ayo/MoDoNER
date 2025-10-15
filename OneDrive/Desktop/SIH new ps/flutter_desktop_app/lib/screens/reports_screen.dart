@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme.dart';
 import '../widgets/project_log_item.dart';
 import 'project_details_screen.dart';
+import '../widgets/report_generator_popup.dart'; 
 
 // Enums for state management
 enum TaskStatus { all, todo, ongoing, completed }
@@ -137,6 +138,14 @@ class _GenerateReportViewState extends State<GenerateReportView> {
     _searchDebounce?.cancel();
     super.dispose();
   }
+
+  void _showReportGeneratorPopup() {
+  showDialog(
+    context: context,
+    builder: (context) => const ReportGeneratorPopup(),
+  );
+}
+
 
   String _formatDate(DateTime? date) {
     if (date == null) return 'Select date';
@@ -468,7 +477,7 @@ class _GenerateReportViewState extends State<GenerateReportView> {
             child: Tooltip(
               message: 'Generate the selected report',
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: _showReportGeneratorPopup,
                 child: const Text('Generate Report'),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -545,11 +554,108 @@ class _ProjectLogsViewState extends State<ProjectLogsView> {
   final List<RiskLevel> riskLevelOptions = const [RiskLevel.all, RiskLevel.high, RiskLevel.medium, RiskLevel.low];
 
   final List<Map<String, dynamic>> projectLogs = [
-    {'name': 'Project Alpha', 'id': 'PR-102', 'riskLevel': 'Medium Risk', 'progress': 75, 'submissionDate': 'Apr 23, 2024'},
-    {'name': 'Project Beta', 'id': 'PR-098', 'riskLevel': 'Medium Risk', 'progress': 90, 'submissionDate': 'Apr 19, 2024'},
-    {'name': 'Project Gamma', 'id': 'PR-076', 'riskLevel': 'Low Risk', 'progress': 100, 'submissionDate': 'Apr 18, 2024'},
-    {'name': 'Project Delta', 'id': 'PR-054', 'riskLevel': 'High Risk', 'progress': 40, 'submissionDate': 'Apr 12, 2024'},
-  ];
+  {
+    'name': 'NH-37 Highway Extension',
+    'id': 'DPR-2024-158',
+    'riskLevel': 'High Risk',
+    'progress': 42,
+    'submissionDate': 'Oct 12, 2025',
+    'sector': 'Roads & Bridges',
+    'location': 'Guwahati to Dimapur',
+    'budget': '₹450 Cr'
+  },
+  {
+    'name': 'Tawang District Hospital',
+    'id': 'DPR-2024-142',
+    'riskLevel': 'Low Risk',
+    'progress': 88,
+    'submissionDate': 'Oct 08, 2025',
+    'sector': 'Health Facilities',
+    'location': 'Tawang, Arunachal Pradesh',
+    'budget': '₹125 Cr'
+  },
+  {
+    'name': 'Kaziranga Eco-Tourism Project',
+    'id': 'DPR-2024-139',
+    'riskLevel': 'Low Risk',
+    'progress': 95,
+    'submissionDate': 'Oct 05, 2025',
+    'sector': 'Eco-Tourism & Sustainable Tourism',
+    'location': 'Kaziranga, Assam',
+    'budget': '₹85 Cr'
+  },
+  {
+    'name': 'Shillong Smart City Water Network',
+    'id': 'DPR-2024-131',
+    'riskLevel': 'Medium Risk',
+    'progress': 67,
+    'submissionDate': 'Sep 28, 2025',
+    'sector': 'Water Supply & Sanitation',
+    'location': 'Shillong, Meghalaya',
+    'budget': '₹220 Cr'
+  },
+  {
+    'name': 'Imphal Irrigation Project',
+    'id': 'DPR-2024-127',
+    'riskLevel': 'High Risk',
+    'progress': 34,
+    'submissionDate': 'Sep 22, 2025',
+    'sector': 'Irrigation & Flood Control',
+    'location': 'Imphal Valley, Manipur',
+    'budget': '₹380 Cr'
+  },
+  {
+    'name': 'Aizawl Digital Data Center',
+    'id': 'DPR-2024-118',
+    'riskLevel': 'Low Risk',
+    'progress': 92,
+    'submissionDate': 'Sep 15, 2025',
+    'sector': 'Digital Connectivity & Data Centers',
+    'location': 'Aizawl, Mizoram',
+    'budget': '₹95 Cr'
+  },
+  {
+    'name': 'Kohima Heritage Preservation',
+    'id': 'DPR-2024-112',
+    'riskLevel': 'Medium Risk',
+    'progress': 58,
+    'submissionDate': 'Sep 10, 2025',
+    'sector': 'Heritage & Cultural Preservation',
+    'location': 'Kohima, Nagaland',
+    'budget': '₹165 Cr'
+  },
+  {
+    'name': 'Agartala Solar Power Grid',
+    'id': 'DPR-2024-105',
+    'riskLevel': 'High Risk',
+    'progress': 28,
+    'submissionDate': 'Sep 02, 2025',
+    'sector': 'Green Energy & Climate Resilience',
+    'location': 'Agartala, Tripura',
+    'budget': '₹510 Cr'
+  },
+  {
+    'name': 'Itanagar Border Road Construction',
+    'id': 'DPR-2024-098',
+    'riskLevel': 'High Risk',
+    'progress': 15,
+    'submissionDate': 'Aug 25, 2025',
+    'sector': 'Border Roads & Helipads',
+    'location': 'Itanagar, Arunachal Pradesh',
+    'budget': '₹680 Cr'
+  },
+  {
+    'name': 'Tura Watershed Management',
+    'id': 'DPR-2024-089',
+    'riskLevel': 'Low Risk',
+    'progress': 78,
+    'submissionDate': 'Aug 18, 2025',
+    'sector': 'Watershed Management',
+    'location': 'Tura, Meghalaya',
+    'budget': '₹140 Cr'
+  },
+];
+
 
   @override
   void initState() {

@@ -24,14 +24,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Mock data moved to be a class member with more items
   final List<Map<String, dynamic>> _recentSubmissions = [
-    {'name': 'DPR Project #1 (Roads)', 'riskScore': 45},
-    {'name': 'DPR Project #2 (Healthcare)', 'riskScore': 65},
-    {'name': 'DPR Project #3 (Tourism)', 'riskScore': 85},
-    {'name': 'DPR Project #4 (Water Supply)', 'riskScore': 30},
-    {'name': 'DPR Project #5 (Education)', 'riskScore': 55},
-    {'name': 'DPR Project #6 (Power Grid)', 'riskScore': 78},
-    {'name': 'DPR Project #7 (Sanitation)', 'riskScore': 25},
-    {'name': 'DPR Project #8 (Housing)', 'riskScore': 60},
+    {'name': 'NH-37 Highway Extension - Guwahati to Dimapur', 'riskScore': 72},
+  {'name': 'Tawang District Hospital Modernization', 'riskScore': 45},
+  {'name': 'Kaziranga Eco-Tourism Infrastructure Development', 'riskScore': 38},
+  {'name': 'Shillong Smart City Water Supply Network', 'riskScore': 65},
+  {'name': 'Imphal Valley Integrated Irrigation Project', 'riskScore': 81},
+  {'name': 'Aizawl Digital Connectivity & Data Center', 'riskScore': 28},
+  {'name': 'Kohima Heritage Site Preservation & Tourism', 'riskScore': 52},
+  {'name': 'Agartala Solar Power Grid Expansion', 'riskScore': 89},
+  {'name': 'Itanagar Border Road & Helipad Construction', 'riskScore': 94},
+  {'name': 'Tura Watershed Management & Afforestation', 'riskScore': 41},
+  {'name': 'Dibrugarh Skill Development & Training Center', 'riskScore': 33},
+  {'name': 'Gangtok-Nathula Road Infrastructure Upgrade', 'riskScore': 76},
   ];
 
   final int _submissionLimit = 5;
