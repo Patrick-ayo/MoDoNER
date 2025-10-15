@@ -7,6 +7,7 @@ class ProjectLogItem extends StatelessWidget {
   final String riskLevel;
   final int progress; // 0-100
   final String submissionDate;
+  final VoidCallback? onTap; // FIX: Added the onTap parameter
 
   const ProjectLogItem({
     super.key,
@@ -15,6 +16,7 @@ class ProjectLogItem extends StatelessWidget {
     required this.riskLevel,
     required this.progress,
     required this.submissionDate,
+    this.onTap, // FIX: Added onTap to the constructor
   });
 
   Color _getRiskColor(String risk) {
@@ -56,45 +58,50 @@ class ProjectLogItem extends StatelessWidget {
       color: Theme.of(context).colorScheme.surface,
       elevation: 1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(name, style: Theme.of(context).textTheme.titleLarge),
-                    const SizedBox(height: 4),
-                    Text(id, style: Theme.of(context).textTheme.bodySmall),
-                  ],
-                ),
-                _buildRiskTag(context),
-              ],
-            ),
-            const SizedBox(height: 16),
-            LinearProgressIndicator(
-              value: progress / 100.0,
-              minHeight: 6,
-              borderRadius: BorderRadius.circular(3),
-              backgroundColor: Theme.of(context).dividerColor.withOpacity(0.1),
-              color: AppTheme.primaryLight,
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Latest submission: $submissionDate',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                Icon(Icons.keyboard_arrow_down, color: Theme.of(context).textTheme.bodySmall?.color),
-              ],
-            )
-          ],
+      // FIX: Wrapped the Card's content in an InkWell and assigned the onTap callback
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(name, style: Theme.of(context).textTheme.titleLarge),
+                      const SizedBox(height: 4),
+                      Text(id, style: Theme.of(context).textTheme.bodySmall),
+                    ],
+                  ),
+                  _buildRiskTag(context),
+                ],
+              ),
+              const SizedBox(height: 16),
+              LinearProgressIndicator(
+                value: progress / 100.0,
+                minHeight: 6,
+                borderRadius: BorderRadius.circular(3),
+                backgroundColor: Theme.of(context).dividerColor.withOpacity(0.1),
+                color: AppTheme.primaryLight,
+              ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Latest submission: $submissionDate',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  Icon(Icons.keyboard_arrow_down, color: Theme.of(context).textTheme.bodySmall?.color),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

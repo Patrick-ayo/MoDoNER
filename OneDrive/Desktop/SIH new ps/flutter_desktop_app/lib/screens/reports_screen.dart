@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../theme.dart';
 import '../widgets/project_log_item.dart';
+import 'project_details_screen.dart';
 
 // Enums for state management
 enum TaskStatus { all, todo, ongoing, completed }
@@ -814,12 +815,19 @@ class _ProjectLogsViewState extends State<ProjectLogsView> {
             selectedRiskLevel != RiskLevel.all)
           const SizedBox(height: 16),
         ...projectLogs.map((data) => ProjectLogItem(
-              name: data['name'],
-              id: data['id'],
-              riskLevel: data['riskLevel'],
-              progress: data['progress'],
-              submissionDate: data['submissionDate'],
-            )),
+      name: data['name'],
+      id: data['id'],
+      riskLevel: data['riskLevel'],
+      progress: data['progress'],
+      submissionDate: data['submissionDate'],
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => ProjectDetailsScreen(projectData: data),
+          ),
+        );
+      },
+    )),
         const SizedBox(height: 80), // Padding for the FAB
       ],
     );
